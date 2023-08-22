@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterContoller;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TodoItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,12 @@ Route::controller(ProjectController::class)->group(function(){
     Route::post('list', 'list');
     Route::post('add', 'add');
     Route::delete('delete/{id}', 'delete');
+})->middleware('auth:sanctum');
+
+
+Route::controller(TodoItemController::class)->prefix('item')->group(function(){
+    Route::post('list/{project_id}', 'list');
+    Route::post('add/{project_id}', 'add');
+    Route::post('update/{item}/{status}', 'change_status');
+    Route::post('delete/{item}', 'delete');
 })->middleware('auth:sanctum');
